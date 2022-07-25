@@ -8,6 +8,7 @@ export default function useStudent() {
 
   const saveStudent = async (data) => {
     await axios.post("https://api-regs.herokuapp.com/api/v1/students", data);
+    success.value = 'Votre inscription a bien été prise en compte';
   }
 
 

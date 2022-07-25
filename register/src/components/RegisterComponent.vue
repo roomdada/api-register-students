@@ -14,6 +14,7 @@ export default {
 
     const loading = ref(false);
     const errors = ref([]);
+    
 
     const { saveStudent, getLevels, success, levels } = useStudent();
 
@@ -57,54 +58,58 @@ export default {
       <p class="text-center">
         Veuillez remplit le formulaire ci-dessous pour la formation en Laravel pro.
       </p>
-     
+
     </div>
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-12 px-4 shadow sm:rounded-lg sm:px-10">
         <form class="space-y-6" @submit.prevent="save">
+          <div v-if="success != ''" class="flex p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+            role="alert">
+            <span class="sr-only">Info</span>
+            <div>
+              <span class="font-medium">Bravo!</span> {{ success }}
+            </div>
+          </div>
           <div>
             <div>
               <input placeholder="Nom" id="form.first_name" v-model='form.first_name' name="first_name" type="text"
-                
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                <span v-if="errors.first_name" class="text-red-600"> {{ errors.first_name }}</span>
+              <span v-if="errors.first_name" class="text-red-600"> {{ errors.first_name[0] }}</span>
             </div>
           </div>
           <div>
             <div>
               <input placeholder="Prénoms" v-model='form.last_name' id="form.last_name" name="last_name" type="text"
-                
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-              <span v-if="errors.last_name" class="text-red-600"> {{ errors.last_name }}</span>
+              <span v-if="errors.last_name" class="text-red-600"> {{ errors.last_name[0] }}</span>
+            </div>
+          </div>
+          <div>
+            <div>
+              <input placeholder="Votre age" id="age" name="age" v-model='form.age' type="number"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              <span v-if="errors.age" class="text-red-600"> {{ errors.age }}</span>
 
             </div>
           </div>
           <div>
             <div>
-              <input placeholder="Votre age" id="age" name="age" v-model='form.age' type="number" 
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                <span v-if="errors.age" class="text-red-600"> {{ errors.age }}</span>
-
-            </div>
-          </div>
-          <div>
-            <div>
-              <select id="level_id" name="level_id" v-model='form.level_id' 
+              <select id="level_id" name="level_id" v-model='form.level_id'
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 <option value="" selected>Votre niveau en laravel</option>
                 <option v-for="level in levels" :value="level.id" v-bind:key="level.id">{{ level.name }}</option>
               </select>
-              <span v-if="errors.level_id" class="text-red-600"> {{ errors.level_id }}</span>
+              <span v-if="errors.level_id" class="text-red-600"> {{ errors.level_id[0] }}</span>
             </div>
           </div>
           <div>
             <div>
               <label for="email" class="block text-sm font-medium text-gray-700"> Votre motivation </label>
-              <textarea id="motivation" v-model='form.motivation' name="motivation" type="text" 
+              <textarea id="motivation" v-model='form.motivation' name="motivation" type="text"
                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
 
               </textarea>
-                <span v-if="errors.motivation" class="text-red-600"> {{ errors.motivation }}</span>
+              <span v-if="errors.motivation" class="text-red-600"> {{ errors.motivation }}</span>
             </div>
           </div>
           <div>
