@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\LevelsController;
+use App\Http\Controllers\API\ArticlesController;
 use App\Http\Controllers\API\StudentsController;
 
 /*
@@ -16,8 +18,18 @@ use App\Http\Controllers\API\StudentsController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-  return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+  Route::get('/user', function (Request $request) {
+    return $request->user();
+  });
+
+});
+
+Route::apiResource('articles', ArticlesController::class)->only('index', 'show');
+
+Route::prefix('auth')->controller(AuthController::class)->group(function () {
+  Route::post('register', 'register');
+  Route::post('login', 'login');
 });
 
 Route::prefix('v1')->group(function () {
