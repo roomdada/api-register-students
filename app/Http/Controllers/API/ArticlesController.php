@@ -11,7 +11,7 @@ class ArticlesController extends Controller
 {
   public function index()
   {
-    return ArticleResource::collection(Article::with('comments', 'category')->latest()->inRandomOrder()->take(10)->get());
+    return ArticleResource::collection(Article::withCount('comments')->with('comments', 'category')->latest()->inRandomOrder()->take(12)->get());
   }
 
   public function show(Article $article)
