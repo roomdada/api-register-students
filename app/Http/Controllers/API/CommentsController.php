@@ -51,7 +51,6 @@ class CommentsController extends Controller
    */
   public function show(Comment $comment)
   {
-    //
   }
 
   /**
@@ -74,6 +73,11 @@ class CommentsController extends Controller
    */
   public function destroy(Comment $comment)
   {
-    //
+    $comment->delete();
+    return response()->json(
+      [
+        'message' => 'Le commentaire a été suppprimé'
+      ]
+    );
   }
 }

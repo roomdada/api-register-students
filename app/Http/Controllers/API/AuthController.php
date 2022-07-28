@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -28,19 +29,18 @@ class AuthController extends Controller
 
   public function login(Request $request)
   {
-    $request->validate([
-      'email' => 'required|string|email|max:255',
-      'password' => 'required|string|min:6',
-    ]);
+    $user = \App\Models\User::where('email', $request->email)->first();
 
-    $credentials = request(['email', 'password']);
-    if (!$token = auth()->attempt($credentials)) {
-      return response()->json([
-        'message' => 'Vos identifiants sont incorrects!',
-      ], 401);
+    if (!$user || !Hash::check($request->password, $user->password)) {
+      return response([
+        'message' => ['E-mail ou mot de passe incorrect']
+      ], 404);
     }
 
-    return $this->respondWithToken($token);
+    $token = $user->createToken('bearer-token')->plainTextToken;
+    return response([
+      'user' => $user,
+      'token' => $token
+    ]);
   }
-
 }

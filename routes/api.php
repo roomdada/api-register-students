@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\LevelsController;
 use App\Http\Controllers\API\ArticlesController;
+use App\Http\Controllers\API\CommentsController;
 use App\Http\Controllers\API\StudentsController;
 
 /*
@@ -22,7 +23,8 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('/user', function (Request $request) {
     return $request->user();
   });
-
+  
+  Route::apiResource('comments', CommentsController::class);
 });
 
 Route::apiResource('articles', ArticlesController::class)->only('index', 'show');
