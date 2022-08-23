@@ -25,6 +25,8 @@ Route::middleware('auth:sanctum')->group(function () {
   });
   
   Route::apiResource('comments', CommentsController::class);
+  Route::get('articles/{article}/comments', [CommentsController::class, 'comments']);
+  
 });
 
 Route::apiResource('articles', ArticlesController::class)->only('index', 'show');

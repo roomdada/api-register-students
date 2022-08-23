@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\CommentResource;
 
 class CommentsController extends Controller
 {
@@ -16,6 +18,11 @@ class CommentsController extends Controller
   public function index()
   {
     //
+  }
+
+  public function comments(Article $article)
+  {
+    return new CommentResource($article->comments);
   }
 
   /**
